@@ -33,7 +33,7 @@ class FileStorage:
             dict_copy[k] = v.to_dict()
         with open(self.__file_path, "w", encoding="utf-8") as contents:
             json.dump(dict_copy, contents)
-            print("We did")
+            
 
     def reload(self):
         """Deserializes the JSON file"""
