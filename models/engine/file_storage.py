@@ -33,6 +33,7 @@ class FileStorage:
             dict_copy[k] = v.to_dict()
         with open(self.__file_path, "w", encoding="utf-8") as contents:
             json.dump(dict_copy, contents)
+            print("We did")
 
     def reload(self):
         """Deserializes the JSON file"""
@@ -45,7 +46,8 @@ class FileStorage:
                 json_dict = json.load(objs)
             for k, v in json_dict.items():
                 for key, value in classes.items():
-                    if k == key:
-                        self.new(value(**v))
+                    print(json_dict[k]["__class__"] )
+                    if json_dict[k]["__class__"] == key:
+                        self.new(classes[key](**json_dict[k]))
         except:
             pass
