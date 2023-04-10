@@ -46,7 +46,6 @@ class FileStorage:
                 json_dict = json.load(objs)
             for k, v in json_dict.items():
                 for key, value in classes.items():
-                    print(json_dict[k]["__class__"] )
                     if json_dict[k]["__class__"] == key:
                         self.new(classes[key](**json_dict[k]))
         except:
