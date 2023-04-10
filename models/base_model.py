@@ -6,19 +6,33 @@ import uuid
 
 
 class BaseModel:
-    """This class defines all common attributes/methods for other classes"""
+    """This class defines all common attributes/methods for other classes
 
-    def __init__(self):
-        """Initialisation
-
-        Args:
+    Attributes:
         id (uuid): The uuid of an instance
         created_at (datetime): The current datatime
         updated_at (datetime): The current dattime updated
+        
+    """
+
+    def __init__(self, *args, **kwargs):
+        """Initialisation
+
+        Args:
+        args (any): unused
+        kwargs (dictionary): All the arguments in key/value pairs
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if kwargs:
+            arg_dict = kwargs.copy()
+            for k, v in arg_dict.items():
+                if k == "created_at" or k == "updated_at":
+                    arg_dict[k] = datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f")
+                if k != "__class__":
+                    setattr(self, k, v)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
     
     def __str__(self):
         """Print [<class name>] (<self.id>) <self.__dict__> """
