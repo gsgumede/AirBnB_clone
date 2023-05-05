@@ -23,7 +23,7 @@ class BaseModel:
         args (any): unused
         kwargs (dictionary): All the arguments in key/value pairs
         """
-        if kwargs:
+        if len(kwargs) != 0:
             arg_dict = kwargs.copy()
             for k, v in arg_dict.items():
                 if k == "created_at" or k == "updated_at":

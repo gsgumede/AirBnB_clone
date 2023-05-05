@@ -2,6 +2,12 @@
 """Defines the class FileStorage"""
 
 from models.base_model import BaseModel
+from models.user import User
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.amenity import Amenity
 import json
 
 
@@ -29,16 +35,25 @@ class FileStorage:
     def save(self):
         """Serializes the objects to JSON file"""
         dict_copy = {}
-        for k, v in self.__objects.items():
-            dict_copy[k] = v.to_dict()
-        with open(self.__file_path, "w", encoding="utf-8") as contents:
-            json.dump(dict_copy, contents)
+        try:
+            for k, v in self.__objects.items():
+                dict_copy[k] = v.to_dict()
+            with open(self.__file_path, "w", encoding="utf-8") as contents:
+                json.dump(dict_copy, contents)
+        except:
+            pass
             
 
     def reload(self):
         """Deserializes the JSON file"""
         classes = {
-            "BaseModel": BaseModel
+            "BaseModel": BaseModel,
+            "User": User,
+            "Amenity": Amenity,
+            "City": City,
+            "Place": Place,
+            "State": State,
+            "Review": Review
         }
         json_dict = {}
         try:
